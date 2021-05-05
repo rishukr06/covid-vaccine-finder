@@ -2,8 +2,8 @@
 
 const http = require('http');
 const axios = require('axios');
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const fromEmail = process.env.FROM_EMAIL;
 
@@ -41,6 +41,9 @@ const init = async () => {
         // do not process inactive user
         if(!db[person][0].is_active) continue;
 
+        // sleep for 5 sec while switching person
+        await new Promise(e => setTimeout(e, 5000));
+
         let districtArray = db[person][0].district_id;
         let email = db[person][0].email;
         districtArray.map( async district => {
@@ -48,7 +51,7 @@ const init = async () => {
             let results = [];
             let resultMaxDate = new Date();
             let dis = district;
-            const days = 30;
+            const days = 30; // check for availability till next 30 days
             let date = new Date().toJSON().slice(0,10);
             const availableCheck =  true;
             try {
@@ -59,6 +62,9 @@ const init = async () => {
 
                     // check if data for this date is already fetched
                     if (newDate.getTime() < resultMaxDate.getTime()) continue;
+
+                    // sleep for 2 sec
+                    await new Promise(e => setTimeout(e, 2000));
 
                     newDate = newDate.toJSON().slice(0,10).split('-').reverse().join('-');
 
@@ -160,8 +166,10 @@ http.createServer(function (req, res) {
     res.end();
 }).listen(8080);
 
+const intervalFactor = 3*60000; // check in 3 minutes interval
+
 console.log('script starts...');
 setInterval(() => {
     init();
     counter++;
-}, 60000)
+}, intervalFactor);
