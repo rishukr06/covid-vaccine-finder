@@ -19,7 +19,12 @@ const db = {
     "user2": [{
         "email" : process.env.USER2_EMAIL,
         "district_id" : ['265', '294'],
-        "is_active" : false,
+        "is_active" : true,
+    }],
+    "user3": [{
+        "email" : process.env.USER3_EMAIL,
+        "district_id" : ['105'],
+        "is_active" : true,
     }],
 };
 
