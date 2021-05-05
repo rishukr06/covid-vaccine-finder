@@ -26,6 +26,12 @@ const db = {
         "district_id" : ['105'],
         "is_active" : true,
     }],
+    "user4": [{
+        "email" : process.env.USER4_EMAIL,
+        "district_id" : ['43,44,45,53'],
+        "is_active" : true,
+    }],
+
 };
 
 // date modifier
@@ -166,7 +172,7 @@ http.createServer(function (req, res) {
     res.end();
 }).listen(8080);
 
-const intervalFactor = 3*60000; // check in 3 minutes interval
+const intervalFactor = 6*60*60000; // check in 6 hrs interval
 
 console.log('script starts...');
 setInterval(() => {
