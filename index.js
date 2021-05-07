@@ -28,7 +28,7 @@ const db = {
     }],
     "user4": [{
         "email" : process.env.USER4_EMAIL,
-        "district_id" : ['43,44,45,53'],
+        "district_id" : ['43','44','45','53'],
         "is_active" : true,
     }],
 
